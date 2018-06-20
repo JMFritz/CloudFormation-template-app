@@ -39,6 +39,7 @@ functions:
   # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
   #     domain api call
   # - authorizer: authenticate using the AWS IAM role
+  
   create:
     handler: create.main
     events:
@@ -79,4 +80,3 @@ functions:
           method: delete
           cors: true
           authorize: aws_iam
-          
