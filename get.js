@@ -1,25 +1,23 @@
-import uuid from "uuid";
 import * as dynamoDbLib from "./libs/dynamodb-lib"; // Helper function in lib folder
 import { success, failure } from "./libs/response-lib"; // Helper function in lib folder
 
 export async function main(event, context, callback) {
-  const data = JSON.parse(event.body);
   const params = {
     TableName: "cf-templates",
-    Item: {
+    Key: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      templateId: uuid.v1(),
-      content: data.content,
-      attachment: data.attachment,
-      createdAt: Date.now()
+      templateId: event.pathParameters.id
     }
   };
 
   try {
-    await dynamoDbLib.call("put", params);
-    callback(null, success(params.Item));
+    const result = await dynamoDbLib.call("get", params);
+    if (result.Item) {
+      callback(null, success(result.Item));
+    } else {
+      callback(null, failure({ status: false, error: "Item not found." }));
+    }
   } catch (e) {
-    console.log(e);
     callback(null, failure({ status: false }));
   }
 }
