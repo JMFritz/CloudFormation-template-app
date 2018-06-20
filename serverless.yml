@@ -63,3 +63,20 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+  update:
+    handler: update.main
+    events:
+      - http:
+          path: templates/{id}
+          method: put
+          cors: true
+          authorizer: aws_iam
+  delete:
+    handler: delete.main
+    events:
+      - http:
+          path: templates/{id}
+          method: delete
+          cors: true
+          authorize: aws_iam
+          

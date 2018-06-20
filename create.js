@@ -11,6 +11,7 @@ export async function main(event, context, callback) {
       templateId: uuid.v1(),
       content: data.content,
       attachment: data.attachment,
+      diagram: data.diagram,
       createdAt: Date.now()
     }
   };
