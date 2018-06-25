@@ -39,7 +39,6 @@ functions:
   # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
   #     domain api call
   # - authorizer: authenticate using the AWS IAM role
-  
   create:
     handler: create.main
     events:
@@ -73,10 +72,13 @@ functions:
           cors: true
           authorizer: aws_iam
   delete:
+    # Defines an HTTP API endpoint that calls the main function in delete.js
+    # - path: url path is /notes/{id}
+    # - method: DELETE request
     handler: delete.main
     events:
       - http:
           path: templates/{id}
           method: delete
           cors: true
-          authorize: aws_iam
+          authorizer: aws_iam
